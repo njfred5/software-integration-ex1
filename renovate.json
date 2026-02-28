@@ -1,0 +1,11 @@
+{
+  "extends": ["config:base"],
+  "timezone": "Europe/Paris",
+  "schedule": ["after 8am and before 10pm"],
+  "packageRules": [
+    {
+      "matchPackagePatterns": ["*"],
+      "automerge": false
+    }
+  ]
+}
