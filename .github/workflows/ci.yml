@@ -22,7 +22,7 @@ jobs:
         run: npm install
 
       - name: Lint (if exists)
-        run: 
+        run: |
           if [ -f package.json ] && grep -q "\"lint\":" package.json; then
             npm run lint
           else
