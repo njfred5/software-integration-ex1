@@ -1,0 +1,11 @@
+extends:
+  - config:base
+
+timezone: Europe/Paris
+schedule:
+  - "every day"
+
+packageRules:
+  - matchPackagePatterns:
+      - "*"
+    automerge: false

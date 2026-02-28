@@ -1,46 +1,41 @@
-name: CI
+name: ci
 
 on:
   push:
-    branches: [ main, dev, release, prod ]
+    branches: [main, dev, release, prod]
   pull_request:
 
 jobs:
-  build-test:
+  run-ci:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
+      - name: get code
         uses: actions/checkout@v4
 
-      - name: Setup Node
+      - name: setup node
         uses: actions/setup-node@v4
         with:
           node-version: 18
 
-      - name: Install dependencies
+      - name: install
         run: npm install
 
-      - name: Lint (if exists)
+      - name: lint (if there is one)
         run: |
-          if [ -f package.json ] && grep -q "\"lint\":" package.json; then
+          if grep -q "\"lint\":" package.json; then
             npm run lint
           else
-            echo "No lint script"
+            echo "no lint script"
           fi
 
-      - name: Run tests (if exists)
+      - name: test (if there is one)
         run: |
-          if [ -f package.json ] && grep -q "\"test\":" package.json; then
+          if grep -q "\"test\":" package.json; then
             npm test
           else
-            echo "No tests"
+            echo "no tests"
           fi
 
-      - name: Build (if exists)
+      - name: build (if there is one)
         run: |
-          if [ -f package.json ] && grep -q "\"build\":" package.json; then
-            npm run build
-          else
-            echo "No build script"
-          fi
