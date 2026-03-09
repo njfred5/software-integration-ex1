@@ -1,0 +1,24 @@
+name: build-docker
+
+on:
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: get code
+        uses: actions/checkout@v4
+
+      - name: login
+        run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+
+      - name: create image
+        run: docker build -t ghcr.io/${{ github.repository_owner }}/myapp:${{ github.sha }} .
+
+      - name: send image
+        run: docker push ghcr.io/${{ github.repository_owner }}/myapp:${{ github.sha }}
+
+      - name: results
+        run: echo "image done"
